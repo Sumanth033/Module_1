@@ -1,5 +1,4 @@
 #include<Arduino.h>
-#include<Arduino.h>
 const int xPin = 2;  // Connect to digital pin 2
 const int yPin = 3;  // Connect to digital pin 3
 const int zPin = 4;  // Connect to digital pin 4
