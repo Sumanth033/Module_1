@@ -1,0 +1,40 @@
+#include<Arduino.h>
+// Define pin numbers for binary inputs
+#define INPUT_A 2
+#define INPUT_B 3
+#define INPUT_C 4
+
+// Define pin numbers for LEDs
+#define LED_1 8
+#define LED_2 9
+#define LED_3 10
+
+void setup() {
+  // Set binary inputs as inputs
+  pinMode(INPUT_A, INPUT);
+  pinMode(INPUT_B, INPUT);
+  pinMode(INPUT_C, INPUT);
+
+  // Set LEDs as outputs
+  pinMode(LED_1, OUTPUT);
+  pinMode(LED_2, OUTPUT);
+  pinMode(LED_3, OUTPUT);
+}
+
+void loop() {
+  // Read binary inputs
+  int A = digitalRead(INPUT_A);
+  int B = digitalRead(INPUT_B);
+  int C = digitalRead(INPUT_C);
+
+  // Convert binary to Gray code
+  int grayCode = (A << 2) | (B << 1) | C;
+
+  // Display Gray code on LEDs
+  digitalWrite(LED_1, (grayCode & 0b001) ? HIGH : LOW);
+  digitalWrite(LED_2, (grayCode & 0b010) ? HIGH : LOW);
+  digitalWrite(LED_3, (grayCode & 0b100) ? HIGH : LOW);
+
+  // Delay for visualization (adjust as needed)
+  delay(1000);
+}
