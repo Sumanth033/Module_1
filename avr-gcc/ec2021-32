@@ -1,0 +1,48 @@
+#include <avr/io.h>
+#include <util/delay.h>
+
+#define LED1_PIN    PB0
+#define LED2_PIN    PB1
+#define LED3_PIN    PB2
+
+void init_leds() {
+    // Set LED pins as output
+    DDRB |= (1 << LED1_PIN) | (1 << LED2_PIN) | (1 << LED3_PIN);
+}
+
+void blink_leds(uint8_t pattern) {
+    // Blink LEDs based on the input pattern
+    if (pattern & 0b100) {
+        PORTB |= (1 << LED1_PIN);
+    } else {
+        PORTB &= ~(1 << LED1_PIN);
+    }
+
+    if (pattern & 0b010) {
+        PORTB |= (1 << LED2_PIN);
+    } else {
+        PORTB &= ~(1 << LED2_PIN);
+    }
+
+    if (pattern & 0b001) {
+        PORTB |= (1 << LED3_PIN);
+    } else {
+        PORTB &= ~(1 << LED3_PIN);
+    }
+
+    _delay_ms(500);  // Delay for 500 milliseconds
+}
+
+int main(void) {
+    init_leds();  // Initialize LED pins
+
+    while (1) {
+        // Example input: 1, 0, 0
+        blink_leds(0b100);
+
+        // Swap LED states: 0, 0, 1
+        blink_leds(0b001);
+    }
+
+    return 0;
+}
