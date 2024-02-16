@@ -1,0 +1,55 @@
+.include "/sdcard/assembly/m328Pdef.inc" 
+ 
+; Set pins PB0, PB1, and PB2 as outputs 
+ldi r16, (1<<DDB0)|(1<<DDB1)|(1<<DDB2) 
+out DDRB, r16 
+ 
+; Infinite loop 
+start: 
+    ; Read input from port D 
+    in r16, PIND 
+ 
+    ; Pattern 1: LED1=1, LED2=1, LED3=1 
+    cpi r16, 0b00000111 
+    breq pattern_1 
+     
+    ; Pattern 2: LED1=0, LED2=1, LED3=0 
+    cpi r16, 0b00000101 
+    breq pattern_2 
+ 
+    ; Pattern 3: LED1=1, LED2=0, LED3=0 
+    cpi r16, 0b00000010 
+    breq pattern_3 
+ 
+    ; Pattern 4: LED1=0, LED2=1, LED3=1 
+    cpi r16, 0b00000110 
+    breq pattern_4 
+ 
+    ; Default: Turn off all LEDs 
+    ldi r16, 0 
+    out PORTB, r16 
+    rjmp start 
+ 
+pattern_1: 
+    ; Turn on all LEDs 
+    ldi r16, (1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2) 
+    out PORTB, r16 
+    rjmp start 
+ 
+pattern_2: 
+    ; Turn on LED2 
+    ldi r16, (1<<PORTB1) 
+    out PORTB, r16 
+    rjmp start 
+ 
+pattern_3: 
+    ; Turn on LED1 
+    ldi r16, (1<<PORTB0) 
+    out PORTB, r16 
+    rjmp start 
+ 
+pattern_4: 
+    ; Turn on LED2 and LED3 
+    ldi r16, (1<<PORTB1)|(1<<PORTB2) 
+    out PORTB, r16 
+    rjmp start
