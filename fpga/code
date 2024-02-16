@@ -1,0 +1,9 @@
+// program for fpga//
+
+
+module helloworldfpga(input wire X, input wire Y, input Z, output wire F);
+always @(*)
+  begin
+      F= ((X&&!Y)||(Y&&!Z)||(!X&&!Y&&!Z));
+end
+endmodule
